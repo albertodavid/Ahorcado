@@ -14,7 +14,7 @@ int32 FAhorcado::GetVidas() const{	return MyVidas;}
 int32 FAhorcado::GetHiddenWordLength() const { return MyHiddenWord.length(); }
 FString FAhorcado::GetHiddenWord() const { return MyHiddenWord; }
 FString FAhorcado::GetUsedChars() const { return UsedChars; }
-int32 FAhorcado::GetHint() const{	return MyHints;}
+int32 FAhorcado::GetHit() const{	return MyHits;}
 
 void FAhorcado::GetMyWorkingWord() {
 
@@ -26,9 +26,9 @@ void FAhorcado::GetMyWorkingWord() {
 }
 
 //Setters
-void FAhorcado::SetHint()
+void FAhorcado::SetHit()
 {
-	MyHints++;
+	MyHits++;
 }
 
 void FAhorcado::SetVidas()
@@ -63,7 +63,7 @@ EHint FAhorcado::SetMyWorkingWord(FString Guess)	//Setea como está la palabra re
 		if (MyHiddenWord[i] == Guess[0])
 		{
 			MyWorkingWord[i] = Guess[0];
-			SetHint();
+			SetHit();
 			Status = EHint::Correct;
 		}
 	}
@@ -98,5 +98,5 @@ void FAhorcado::Reset()
 	MyVidas = 7;
 	MyWorkingWord.clear();
 	UsedChars = "";
-	MyHints = 0;
+	MyHits = 0;
 }

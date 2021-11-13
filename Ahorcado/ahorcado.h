@@ -31,8 +31,8 @@ public:
 
 	int32 GetVidas() const;
 	void SetVidas();
-	int32 GetHint() const;
-	void SetHint();
+	int32 GetHit() const;
+	void SetHit();
 
 	int32 GetHiddenWordLength() const;
 
@@ -60,7 +60,7 @@ private:
 	std::vector<FString> Words = {"ahorcado", "mandarina", "platano", "selva", "coche", "casa", "esternocleidomastoideo", "hola", "amigo", "ancestro"};
 	
 	int32 MyVidas = 7;
-	int32 MyHints = 0;
+	int32 MyHits = 0;
 	int32 HiddenWordLength = 0;
 };
 

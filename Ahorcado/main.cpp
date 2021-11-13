@@ -47,7 +47,7 @@ void PlayGame()
 		{
 		case EHint::Correct:
 			
-			if (Ahorcado.GetHint() == Ahorcado.GetHiddenWordLength())
+			if (Ahorcado.GetHit() == Ahorcado.GetHiddenWordLength())
 			{
 				
 				std::cout << "\n\nFELICIDADES CHAMPION, HAS ACERTADO LA PALABRA!!!\n\n";
