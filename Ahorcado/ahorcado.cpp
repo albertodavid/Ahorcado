@@ -1,37 +1,49 @@
 #include "ahorcado.h"
+#include <string>
+#include <stdlib.h>
+#include <ctime>
 
 
-FAhorcado::FAhorcado()
+
+FAhorcado::FAhorcado() //Constructor
 {
 }
 
-int32 FAhorcado::GetCurrentTry() const{	return MyCurrentTry;}
+//Getters
+int32 FAhorcado::GetVidas() const{	return MyVidas;}
 int32 FAhorcado::GetHiddenWordLength() const { return MyHiddenWord.length(); }
 FString FAhorcado::GetHiddenWord() const { return MyHiddenWord; }
+FString FAhorcado::GetUsedChars() const { return UsedChars; }
+int32 FAhorcado::GetHint() const{	return MyHints;}
 
 void FAhorcado::GetMyWorkingWord() {
 
-	for (size_t i = 0; i < GetHiddenWordLength(); i++)
+	for (int i = 0; i < GetHiddenWordLength(); i++)
 	{
 		std::cout << MyWorkingWord[i] << " ";
 	}
-	
+
 }
 
-void FAhorcado::SetCurrentTry()
+//Setters
+void FAhorcado::SetHint()
 {
-	MyCurrentTry++;
+	MyHints++;
 }
 
-void FAhorcado::SetHiddenWord(FString HW)
+void FAhorcado::SetVidas()
 {
-
-	const FString HIDDEN_WORD = HW; //Placeholder
-	MyHiddenWord = HIDDEN_WORD;
-
+	MyVidas = MyVidas - 1;
 }
 
-void FAhorcado::SetFirstTimeWW()
+void FAhorcado::SetHiddenWord()
+{
+	srand(time(NULL));
+	MyHiddenWord = Words[rand()%10];
+}
+
+
+void FAhorcado::SetFirstTimeWW() //Setea la WorkingWord como '_________' en funcion de lo largo que sea la palabra oculta
 {
 	for (int32 i = 0; i < GetHiddenWordLength(); i++)
 	{
@@ -39,10 +51,30 @@ void FAhorcado::SetFirstTimeWW()
 	}
 }
 
-void FAhorcado::SetMyWorkingWord()
-{
+
+
+EHint FAhorcado::SetMyWorkingWord(FString Guess)	//Setea como está la palabra respecto nuestros inputs
+{													//Por ejemplo: a h _ _ _a _ _
+	EHint Status = EHint::Incorrect;
+	int32 found = MyHiddenWord.find(Guess);
+
+	for (size_t i = 0; i < GetHiddenWordLength(); i++)
+	{
+		if (MyHiddenWord[i] == Guess[0])
+		{
+			MyWorkingWord[i] = Guess[0];
+			SetHint();
+			Status = EHint::Correct;
+		}
+	}
+	
+	UsedChars.push_back(Guess[0]); // Va creando el String con las letras que hemos utilizado
+	
+	return Status;
 
 }
+
+//Comprueba que los inputs del usuario funcionan correctamente
 
 ESubmitStatus FAhorcado::CheckGuessStatus(FString character)
 {
@@ -56,9 +88,15 @@ ESubmitStatus FAhorcado::CheckGuessStatus(FString character)
 		return ESubmitStatus::Not_Lowercas;
 	}
 
+	return ESubmitStatus::Invalid_Status;
 }
 
-FString FAhorcado::SubmitGuess()
+//Resetea la partida
+
+void FAhorcado::Reset()
 {
-	return FString();
+	MyVidas = 7;
+	MyWorkingWord.clear();
+	UsedChars = "";
+	MyHints = 0;
 }

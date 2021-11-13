@@ -15,36 +15,52 @@ enum class ESubmitStatus
 
 };
 
+enum class EHint
+{
+	Correct,
+	Incorrect
+};
+
 class FAhorcado
 {
 public:
 
-	FAhorcado(); 
+	FAhorcado(); //Constructor
 
-	int32 GetCurrentTry() const;
-	void SetCurrentTry();
+	//Getters y Setters
+
+	int32 GetVidas() const;
+	void SetVidas();
+	int32 GetHint() const;
+	void SetHint();
 
 	int32 GetHiddenWordLength() const;
 
 	FString GetHiddenWord() const;
-	void SetHiddenWord(FString HW);
+	void SetHiddenWord();
 
 	void GetMyWorkingWord();
 	void SetFirstTimeWW();
-	void SetMyWorkingWord();
+
+	FString GetUsedChars() const;
+
+	EHint SetMyWorkingWord(FString Guess);
 
 	ESubmitStatus CheckGuessStatus(FString character);
-	FString SubmitGuess();
+
+	void Reset();
 
 private:
 	char GuessChar;
 	
 	FString MyHiddenWord;
-	FString MyUsedLetters;
-	
-	std::vector<char> MyWorkingWord;
+	FString UsedChars;
 
-	int32 MyCurrentTry;
-	int32 HiddenWordLength;
+	std::vector<char> MyWorkingWord;
+	std::vector<FString> Words = {"ahorcado", "mandarina", "platano", "selva", "coche", "casa", "esternocleidomastoideo", "hola", "amigo", "ancestro"};
+	
+	int32 MyVidas = 7;
+	int32 MyHints = 0;
+	int32 HiddenWordLength = 0;
 };
 
